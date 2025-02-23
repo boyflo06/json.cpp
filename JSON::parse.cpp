@@ -6,7 +6,7 @@
 /*   By: fghysbre <fghysbre@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:40:13 by fghysbre          #+#    #+#             */
-/*   Updated: 2025/02/23 14:44:44 by fghysbre         ###   ########.fr       */
+/*   Updated: 2025/02/23 15:21:47 by fghysbre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 JSON	parser(const std::string&str, std::string::const_iterator &it) {
     JSON	ret;
 	if (*it == '{') {
+		ret = JSONObject();
 		it += 1;
 		while (true) {
 			if (*it == '}') {
@@ -31,6 +32,7 @@ JSON	parser(const std::string&str, std::string::const_iterator &it) {
 				it += 2;
 		}
 	} else if (*it == '[') {
+		ret = JSONArray();
 		JSONArray arr;
 		it++;
 		while (true) {
