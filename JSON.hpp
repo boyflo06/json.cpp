@@ -6,7 +6,7 @@
 /*   By: fghysbre <fghysbre@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 19:16:52 by fghysbre          #+#    #+#             */
-/*   Updated: 2025/02/22 23:33:34 by fghysbre         ###   ########.fr       */
+/*   Updated: 2025/02/23 14:33:25 by fghysbre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,9 @@ public:
 	JSON	&operator=(int i);
 	JSON	&operator=(bool b);
 	JSON	&operator=(double d);
+	JSON	&operator=(const JSONArray &arr);
+	JSON	&operator=(const JSONObject &obj);
+	JSON	&operator=(ft_nullptr_t);
 	
 	JSON	&operator[](const std::string &key);
 	const JSON	&operator[](const std::string &key) const;
@@ -134,5 +137,7 @@ public:
 	const JSON	&operator[](size_t index) const;
 
 	std::string	serialize() const;
+
+	static JSON	parse(const std::string &str);
 };
 

@@ -6,7 +6,7 @@
 /*   By: fghysbre <fghysbre@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 19:35:41 by fghysbre          #+#    #+#             */
-/*   Updated: 2025/02/22 23:35:39 by fghysbre         ###   ########.fr       */
+/*   Updated: 2025/02/23 13:09:39 by fghysbre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,6 +306,21 @@ JSON& JSON::operator=(double d) {
 	return *this;
 }
 
+JSON& JSON::operator=(const JSONArray& arr) {
+	value = arr;
+	return *this;
+}
+
+JSON& JSON::operator=(const JSONObject& obj) {
+	value = obj;
+	return *this;
+}
+
+JSON& JSON::operator=(ft_nullptr_t) {
+	value = ft_nullptr;
+	return *this;
+}
+
 JSON& JSON::operator[](const std::string& key) {
 	if (!this->value.holds_alternative(OBJECT))
 		value = JSONObject();
@@ -367,3 +382,5 @@ std::string	JSON::serialize() const {
 	}
 	return (ss.str());
 }
+
+
