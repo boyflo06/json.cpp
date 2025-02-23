@@ -6,14 +6,14 @@
 /*   By: fghysbre <fghysbre@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 12:40:13 by fghysbre          #+#    #+#             */
-/*   Updated: 2025/02/23 15:21:47 by fghysbre         ###   ########.fr       */
+/*   Updated: 2025/02/23 15:47:36 by fghysbre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "JSON.hpp"
 #include <iostream>
 
-JSON	parser(const std::string&str, std::string::const_iterator &it) {
+JSON	parser(std::string&str, std::string::iterator &it) {
     JSON	ret;
 	if (*it == '{') {
 		ret = JSONObject();
@@ -25,11 +25,11 @@ JSON	parser(const std::string&str, std::string::const_iterator &it) {
 			}
 			it += 1;
 			size_t start = it - str.begin();
-			size_t delimpos = str.find("\": ", start);
+			size_t delimpos = str.find("\":", start);
 			std::string key = str.substr(start, delimpos - start);
-			ret[key] = parser(str, (it = str.begin() + delimpos + 3));
-			if ((it - str.begin()) + 5 <= str.size() && !str.compare(it - str.begin(), 2, ", "))
-				it += 2;
+			ret[key] = parser(str, (it = str.begin() + delimpos + 2));
+			if (*it == ',')
+				it += 1;
 		}
 	} else if (*it == '[') {
 		ret = JSONArray();
@@ -42,8 +42,8 @@ JSON	parser(const std::string&str, std::string::const_iterator &it) {
 				return ret;
 			}
 			arr.push_back(parser(str, it));
-			if ((it - str.begin()) + 2 <= str.size() && !str.compare(it - str.begin(), 2, ", "))
-				it += 2;
+			if (*it == ',')
+				it += 1;
 		}
 	} else if (*it == '"') {
 		it++;
@@ -83,7 +83,27 @@ JSON	parser(const std::string&str, std::string::const_iterator &it) {
 	return ret;
 }
 
+std::string	removeWhitespace(const std::string& str) {
+	std::string 			ret = str;
+	std::string::iterator	it = ret.begin();
+	bool					inside = false;
+	for (; it != ret.end();) {
+		if (*it == '"') {
+			inside = !inside;
+			++it;
+		}
+		else if (*it == '\\')
+			it += 2;
+		else if (!inside && isspace(*it))
+			it = ret.erase(it);
+		else
+			++it;
+	}
+	return ret;
+}
+
 JSON JSON::parse(const std::string& str) {
-	std::string::const_iterator	it = str.begin();
-	return parser(str, it);
+	std::string				temp = removeWhitespace(str);
+	std::string::iterator	it = temp.begin();
+	return parser(temp, it);
 }

@@ -6,7 +6,7 @@
 /*   By: fghysbre <fghysbre@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 00:52:13 by fghysbre          #+#    #+#             */
-/*   Updated: 2025/02/23 14:49:30 by fghysbre         ###   ########.fr       */
+/*   Updated: 2025/02/23 15:47:55 by fghysbre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int main(void) {
     }
     std::cout << json.serialize() << std::endl;
     
+    //JSON parsed = JSON::parse("{\"address\": {\"city\": \"Anytown\", \"street\": \"123 Main St\"}, \"age\": 30, \"gpa\": 3.5, \"is_student\": false, \"name\": \"Jhon Doe\", \"phone_numbers\": [\"123-456-7890\", \"987-654-3210\"]}");
     JSON parsed = JSON::parse("{\"address\": {}}");
 
     std::cout << parsed.serialize() << std::endl;
